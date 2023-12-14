@@ -68,9 +68,9 @@ def clasificar_circulos(imagen_path):
 
     # Agregar el texto a la imagen
     font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.putText(imagen, f'Cantidad de círculos en Grupo 1: {cantidad_grupo1}', (10, imagen.shape[0] - 20), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
-    cv2.putText(imagen, f'Cantidad de círculos en Grupo 2: {cantidad_grupo2}', (10, imagen.shape[0] - 50), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
 
+    cv2.putText(imagen, f'Cantidad de circulos en Grupo 2: {cantidad_grupo2}', (10, imagen.shape[0] - 50), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+    cv2.putText(imagen, f'Cantidad de circulos en Grupo 1: {cantidad_grupo1}', (10, imagen.shape[0] - 20), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
     # Guardar la imagen resultante en el directorio 'uploads'
     ruta_guardado = 'uploads/resultado_grupo.jpg'
     cv2.imwrite(ruta_guardado, imagen)

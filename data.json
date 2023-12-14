@@ -1,0 +1,53 @@
+{
+    "Cuestions": {
+        "hola": "Holi En que puedo ayudarte",
+        "bye": "Bye te espero pronto!",
+        "¿como estás?": "Estoy bien, gracias por preguntar.",
+        "default": "No entiendo lo que estás diciendo. ¿Puedes reformular tu pregunta?",
+        "quien te creo": "Mi creadora es Keisy Vallejos Carrera. ¿Interesante no crees?",
+        "si": "excelente"
+    },
+    "Cuestions_ban": {
+        "serrano": "de racismo",
+    "tonto": "de insulto",
+    "imbécil": "de insulto",
+    "estúpido": "de insulto",
+    "sin papá": "de insulto",
+    "malparido": "de insulto",
+    "idiota": "de insulto",
+    "cabron": "de insulto",
+    "indigena": "de insulto",
+    "paisano": "de insulto",
+    "maldito ": "de insulto",
+    "huanaco": "de insulto",
+    "nigger": "de insulto",
+    "prieto": "de insulto",
+    "gordo": "de insulto",
+    "pou": "de insulto",
+    "negra": "de insulto",
+    "moreno": "de insulto",
+    "gay": "de insulto",
+    "homosexual": "de insulto",
+    "tonta": "de insulto",
+    "joder": "de insulto",
+    "silencio negro": "de racismo",
+    "negro": "de racismo",
+    "cholo tonto": "de discriminación",
+    "cholo": "de discriminación",
+    "basura": "de contenido ofensivo",
+    "tarado": "de comportamiento irrespetuoso",
+    "largate": "de ofensa",
+    "pobre": "de lenguaje humillante"
+    },
+    "Neuro": {
+        "Me sieto triste": "Ohh en que puedo ayudarte, dejame que soy un chaat bot especializado en ayudar a los humanos con sus emociones",
+        "Mal":"Sabes, sentirse mal es normal eres humano y las emociones no son malas ",
+        "Que puedo hacer": "Experimentar tristeza es algo normal, Así que si te apetece llorar, hazlo, es sanador y te vas a sentir más aliviado ¿Sientes Ansiedad?",
+        "ok":"Te brindare tecnicas para la ansiedad : Respiración: tomar aire y llevarlo a nuestro diafragma, al vientre, sin hinchar el pecho",
+        "Estoy enojado":"oh calma, dahite va un chiste : ¿como se dice papel en japones ?",
+        "nose":"Sacamoko jaja , espero haberte ayudado"
+    },
+    "Learning": {
+        "mama":"mamamamamama"
+    }  
+}

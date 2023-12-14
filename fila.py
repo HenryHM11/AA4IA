@@ -42,7 +42,7 @@ def contar_fichas_por_fila(imagen_path):
             # Verificar si el círculo pertenece a la misma fila
             if abs(y - fila_actual) < 10:
                 fichas_por_fila += 1
-                cv2.circle(imagen_resultante, (x, y), circulo[2], (0, 255, 0), 0)
+                cv2.circle(imagen_resultante, (x, y), circulo[2], (0, 0, 0), 0)
             else:
                 # Imprimir la cantidad de fichas para la fila actual y reiniciar para la nueva fila
                 cv2.putText(imagen_resultante, f'{fichas_por_fila} fichas', (x + 30, fila_actual), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)

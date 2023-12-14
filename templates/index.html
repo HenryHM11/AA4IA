@@ -7,6 +7,9 @@
     
     <title>IA Kitty</title>
     <style>
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
         body{
             background-color: #141414;
             font-family: Arial, sans-serif;
@@ -108,16 +111,52 @@
             inset: 0;
             pointer-events: none;
         }
-        .loader-container {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente */
+        
+        .btn{
+          --c:  #229091;
+          
+          box-shadow: 0 0 0 .1em inset var(--c); 
+          --_g: linear-gradient(var(--c) 0 0) no-repeat;
+          background: 
+            var(--_g) calc(var(--_p,0%) - 100%) 0%,
+            var(--_g) calc(200% - var(--_p,0%)) 0%,
+            var(--_g) calc(var(--_p,0%) - 100%) 100%,
+            var(--_g) calc(200% - var(--_p,0%)) 100%;
+          background-size: 50.5% calc(var(--_p,0%)/2 + .5%);
+          outline-offset: .1em;
+          transition: background-size .4s, background-position 0s .4s;
+
+        }
+        .btn:hover {
+          --_p: 100%;
+          transition: background-position .4s, background-size 0s;
+        }
+        .btn:active {
+          box-shadow: 0 0 9e9q inset #0009; 
+          background-color: var(--c);
+          color: #fff;
+        }
+
+        .btn{
+          font-family: system-ui, sans-serif;
+          font-size: 20px;
+          cursor: pointer;
+          padding: 10px 20px;
+          font-weight: bold;  
+          border: none;
+          margin-top: 50px;
+          margin-right: 50px;
+          position:absolute;
+          right:0;
+          
+        }
+        .imgs{
+          display:flex;
+        }
+        .caj{
+          margin-left:10px;
+          margin-right:10px;
+          margin-top:15px;
         }
     </style>
 </head>
@@ -125,10 +164,10 @@
     <section class="centro">
     <div class="titulo">
         <h2>Bienvenid@ soy Kitty</h2>
-        <p>Soy una IA y actualmente me encuentro en desarrollo</p>
-        <p>Mis funciones aun son basicas y me encuentro en constante aprendizaje</p>
-        <p>Puedes utilizar mis herramientas la cual son detectar circulos la cual podras elegir la imagen y el programa procesara para que lo cuente por filas por colores y por grupo</p>
-        <p>Tambien cuento con un chat bot la cual puedes acceder a el en el apartado de abajo</p>
+        <p>Soy una IA y actualmente me encuentro en desarrollo.</p>
+        <p>Mis funciones aun son basicas y me encuentro en constante aprendizaje.</p>
+        <p>Puedes utilizar mis herramientas la cual son detectar circulos la cual podras elegir la imagen y el programa procesara para que lo cuente por filas por colores y por grupo.</p>
+        <p>Tambien cuento con un chat bot la cual puedes acceder a el en el apartado superior a la derecha.</p>
     </div>
     
     <h1>Seleccione una imagen</h1>
@@ -145,9 +184,30 @@
         <button type="submit" class="button" >Procesar
             <img class="button-hat" src="https://assets.codepen.io/4175254/santa-hat-test-9.png" alt="">
         </button>
-    </form>
-    </section>
     
+<section class="imgs">
+  <div class="caj">
+    <h3>Prueba 1</h3>
+    <img src="{{ url_for('serve_image', filename='prueba1.jpg') }}" alt="Imagen" width="100px" height="100px">
+  </div>
+  <div class="caj">
+    <h3>Prueba 2</h3>
+    <img src="{{ url_for('serve_image', filename='prueba2.jpg') }}" alt="Imagen" width="100px" height="100px">
+  </div>
+  <div class="caj">
+    <h3>Prueba 3</h3>
+    <img src="{{ url_for('serve_image', filename='prueba3.jpg') }}" alt="Imagen" width="100px" height="100px">
+  </div>
+  <div class="caj">
+    <h3>Prueba 4</h3>
+    <img src="{{ url_for('serve_image', filename='prueba4.jpg') }}" alt="Imagen" width="100px" height="100px">
+  </div>
+  </section>
+    </section>
+  </form>
+  <form action="{{ url_for('indexbot') }}" method="post">
+    <button type="submit" class="btn"><span class="btnInner">ChatBot</span></button>
+</form>
     <canvas class="canvas"></canvas>
 </body>
 <script>

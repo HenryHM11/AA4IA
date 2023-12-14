@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 14 14'%3E%3Cpath fill='none' stroke='%23000000' stroke-linecap='round' stroke-linejoin='round' d='M6.5 10.25h1m-7 3l3.5-2m-3.5-3l4 1m2.98-6.97L12.87.77a.46.46 0 0 1 .46.11a.49.49 0 0 1 .16.45l-1.1 5.61c-.06-.15-.12-.31-.17-.47A5.75 5.75 0 0 0 7 2.25a5.75 5.75 0 0 0-5.22 4.22c-.05.17-.11.32-.17.48L.51 1.33A.49.49 0 0 1 .67.88a.46.46 0 0 1 .46-.11l5.39 1.51m1.98 10.8a6.7 6.7 0 0 1-3 0m8 .17l-3.5-2m3.5-3l-4 1'/%3E%3C/svg%3E" type="image/svg+xml">
-    
+
     <title>Resultados</title>
     <style>
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
         body{
             background-color: #141414;
             font-family: Arial, sans-serif;
             user-select: none;
             cursor: default;
+        }
+        ::-webkit-scrollbar {
+            width: 0px;
         }
         h1{
             display: flex;
@@ -40,24 +46,196 @@
             border-image-slice: 1;
             border-radius: 20px;
         }
-        
+        .button-resizer {
+            padding: 12px;
+            min-width: -webkit-fit-content;
+            min-width: -moz-fit-content;
+            min-width: fit-content;
+            overflow: hidden;
+
+        }
+
+        .button {
+            position: relative;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 8px 16px;
+            width: 40px
+            text-align: center;
+            color: #fff;
+            background-image: linear-gradient(to bottom, #f12828, #a00332, #9f0f31), linear-gradient(to bottom, #ae0034, #6f094c);
+            background-clip: padding-box, border-box;
+            background-origin: padding-box, border-box;
+            box-shadow: inset 0 1px rgba(255, 255, 255, 0.25), inset 0 -1px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.25);
+            transition-property: transform, filter;
+            transition-duration: 0.2s;
+            will-change: transform;
+            resize: both;
+            align-items: center;
+            justify-content: center;
+            left:48%;
+            cursor:pointer;
+        }
+        .button:active {
+            transform: scale(0.92);
+            filter: brightness(0.8);
+        }
+
+        .button::after {
+            --overflow-x: 4px;
+            --snow-image: url("https://assets.codepen.io/4175254/snow-cap-test-2.png");
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: calc(var(--overflow-x) * -1);
+            border-image-source: var(--snow-image);
+            border-image-slice: calc(6 * 56 / 20) fill;
+            border-image-width: calc(28px / 3);
+            border-image-repeat: round;
+            width: calc(100% + var(--overflow-x) * 2);
+            height: 28px;
+            filter: drop-shadow(0 2px 1px rgba(0, 0, 0, 0.25));
+            opacity: 1;
+            -webkit-animation: fade-in 2s;
+                    animation: fade-in 2s;
+        }
+
+        @-webkit-keyframes fade-in {
+            0%, 50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fade-in {
+            0%, 50% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+        .canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+        }
     </style>
 </head>
 <body>
     <h1>Resultados</h1>
+    <div class="button-resizer">
+        <button class="button" type="button" onclick="goBack()">
+            Volver
+        </button>
+    </div>
     <section class="contenedorim">
     <div class="caja">
         <h2>Resultado Filas</h2>
-        <img src="{{ url_for('uploaded_file', filename='resultado_fila.jpg') }}" alt="Resultado Filas" width="300" height="300">
+        <img src="{{ url_for('uploaded_file', filename='resultado_fila.jpg') }}" alt="Resultado Filas" width="350" height="350">
     </div>
     <div class="caja">
         <h2>Resultado Grupo</h2>
-        <img src="{{ url_for('uploaded_file', filename='resultado_grupo.jpg') }}" alt="Resultado Grupo" width="300" height="300">
+        <img src="{{ url_for('uploaded_file', filename='resultado_grupo.jpg') }}" alt="Resultado Grupo" width="350" height="350">
     </div>
     <div class="caja">
         <h2>Resultado Color</h2>
-        <img src="{{ url_for('uploaded_file', filename='resultado_color.jpg') }}" alt="Resultado Color" width="300" height="300">
+        <img src="{{ url_for('uploaded_file', filename='resultado_color.jpg') }}" alt="Resultado Color" width="350" height="350">
     </div>
     </section>
+
+    <canvas class="canvas"></canvas>
 </body>
+<script>
+
+const canvas = document.querySelector('.canvas');
+const ctx = canvas.getContext('2d');
+
+const pixelRatio = window.devicePixelRatio || 1;
+
+const snowflakes = [];
+
+class Snowflake {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+
+        const maxSize = 3;
+        this.size = Math.random() * (maxSize - 1) + 1;
+        this.velocity = this.size * 0.35;
+        const opacity = this.size / maxSize;
+        this.fill = `rgb(255 255 255 / ${opacity})`;
+
+        this.windSpeed = (Math.random() - 0.5) * 0.1;
+        this.windAngle = Math.random() * Math.PI * 2;
+}
+isOutsideCanvas() {
+    return this.y > canvas.height + this.size;
+}
+reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = -this.size;
+}
+update() {
+    this.windAngle += this.windSpeed;
+    this.wind = Math.cos(this.windAngle) * 0.5;
+
+    this.x += this.wind;
+    this.y += this.velocity;
+
+    if (this.isOutsideCanvas()) {
+        this.reset();
+    }
+}
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.fill;
+        ctx.fill();
+        ctx.closePath();
+}}
+
+
+const createSnowflakes = () => {
+  snowflakeCount = Math.floor(window.innerWidth * window.innerHeight / 8000);
+
+for (let i = 0; i < snowflakeCount; i++) {
+    snowflakes.push(new Snowflake());
+}
+};
+
+const resizeCanvas = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    canvas.width = width * pixelRatio;
+    canvas.height = height * pixelRatio;
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    ctx.scale(pixelRatio, pixelRatio);
+    snowflakes.length = 0;
+    createSnowflakes();
+};
+
+window.addEventListener('resize', resizeCanvas);
+
+resizeCanvas();
+
+const render = () => {
+    requestAnimationFrame(render);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    snowflakes.forEach(snowflake => {
+    snowflake.update();
+    snowflake.draw();
+    });
+};
+
+render();
+//# sourceURL=pen.js
+function goBack() {
+    window.history.back();
+}
+</script>
 </html>

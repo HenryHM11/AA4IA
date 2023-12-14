@@ -2,6 +2,10 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from fila import contar_fichas_por_fila
 from grupo import clasificar_circulos
 from color import contar_circulos_por_color
+#bot
+from flask import Flask, render_template, request, jsonify
+from chatbot import process_input, process_input_neuro, process_input_ban, es_operacion_matematica, Learning
+from data import cargar_datos, guardar_datos
 import os
 
 app = Flask(__name__)
@@ -40,6 +44,58 @@ def procesar_imagen():
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/static/img/<filename>')
+def serve_image(filename):
+    return send_from_directory('static/img', filename)
+
+
+#chatbot
+@app.route('/', methods=['GET', 'POST'])
+def indexbot():
+    if request.method == 'POST':
+        # Aquí puedes manejar la lógica específica para solicitudes POST si es necesario
+        pass
+
+    Cuestions, Cuestions_ban, Neuro, Learning = cargar_datos()
+    return render_template('indexbot.html')
+
+@app.route('/get_response', methods=['POST'])
+def get_response():
+    user_message = request.form['user_message']
+
+    respuesta_ban = process_input_ban(user_message)
+
+    if respuesta_ban:
+        bot_response = respuesta_ban
+    else:
+        respuesta_neuro = process_input_neuro(user_message)
+        if respuesta_neuro:
+            bot_response = respuesta_neuro
+        elif es_operacion_matematica(user_message):
+            resultado = eval(user_message)
+            bot_response = "El resultado es {}".format(resultado)
+        else:
+            bot_response = process_input(user_message)
+
+    print(f"Bot Response: {bot_response}")
+
+    return jsonify({'bot_response': bot_response})
+
+
+@app.route('/store_learning_response', methods=['POST'])
+def store_learning_response():
+    user_message = request.form['user_message']
+    user_learning_response = request.form['user_learning_response']
+
+    Cuestions, Cuestions_ban, Neuro, Learning = cargar_datos()
+    Learning[user_message.lower()] = user_learning_response
+    guardar_datos({'Cuestions': Cuestions, 'Cuestions_ban': Cuestions_ban, 'Neuro': Neuro, 'Learning': Learning})
+
+    return jsonify({'success': True})
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
