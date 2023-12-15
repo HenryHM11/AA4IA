@@ -2,7 +2,6 @@ import difflib
 import re
 from data import cargar_datos, guardar_datos, aprender_respuesta
 
-# Carga inicial de datos
 data = cargar_datos()
 Cuestions = data.get("Cuestions", {})
 Cuestions_ban = data.get("Cuestions_ban", {})
@@ -72,7 +71,7 @@ if __name__ == "__main__":
         usuario_key = input("Tú: ")
 
         if usuario_key.lower() == "bye":
-            # Guardar datos antes de salir
+            
             data["Cuestions"] = Cuestions
             data["Cuestions_ban"] = Cuestions_ban
             data["Neuro"] = Neuro

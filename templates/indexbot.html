@@ -253,7 +253,6 @@
             </div>
 
 
-        <!-- Indicaciones de Uso -->
         <div id="usage-instructions">
             <h2>Indicaciones para usar el Sistema</h2>
             <p>
@@ -302,7 +301,6 @@
               botResponse +
               "</div>";
 
-            // Si la respuesta indica "Enseñame", mostrar un formulario para enseñar al chatbot
             if (botResponse.startsWith("Enseñame:")) {
               var teachFormContainer = document.getElementById(
                 "teach-form-container"
@@ -314,10 +312,8 @@
                 userMessage +
                 "')\">Enviar Respuesta</button>";
 
-              // Mostrar el contenedor del formulario
               teachFormContainer.style.display = "flex";
             } else {
-              // Ocultar el contenedor del formulario si no es una solicitud de enseñar
               document.getElementById("teach-form-container").style.display =
                 "none";
             }
@@ -347,21 +343,17 @@
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "success") {
-              // Mostrar alerta de éxito en lugar del mensaje
               showSuccessAlert(
                 "¡Gracias! La respuesta ha sido aprendida. Vuelve a preguntar por favor."
               );
 
-              // Ocultar el formulario después de unos segundos
               setTimeout(function () {
                 document.getElementById("teach-form-container").style.display =
                   "none";
               }, 2000);
 
-              // Mostrar el contenedor del formulario principal para seguir preguntando
               document.getElementById("user-input").style.display = "flex";
             } else {
-              // Mostrar alerta de error si no se pudo aprender la respuesta
               showErrorAlert(
                 "Hubo un error al aprender la respuesta. Por favor, inténtalo de nuevo."
               );
