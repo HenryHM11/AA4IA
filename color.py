@@ -62,12 +62,12 @@ def contar_circulos_por_color(imagen_path):
         
         # Agregar la cantidad de colores en una esquina de la imagen
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(imagen, f'Cantidad de colores: {len(contador_por_color)}', (10, 30), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(imagen, f'Cantidad de colores: {len(contador_por_color)}', (10, 30), font, 1, (0, 0, 255), 3, cv2.LINE_AA)
 
         # Agregar la cantidad de cada color debajo del texto principal
         y_offset = 60
         for color, cantidad in contador_por_color.items():
-            cv2.putText(imagen, f'{color}: {cantidad}', (10, y_offset), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(imagen, f'{color}: {cantidad}', (10, y_offset), font, 1, (0, 0, 255), 3, cv2.LINE_AA)
             y_offset += 30
 
         cv2.imwrite(ruta_guardado, imagen)
@@ -89,12 +89,12 @@ def mostrar_imagen_con_circulos(imagen, circulos, colores, contador_por_color):
         
         # Agregar la cantidad de colores en una esquina de la imagen
         font = cv2.FONT_HERSHEY_SIMPLEX
-        cv2.putText(imagen_resultante, f'Cantidad de colores: {len(contador_por_color)}', (10, 30), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+        cv2.putText(imagen_resultante, f'Cantidad de colores: {len(contador_por_color)}', (10, 30), font, 1.2, (0, 0, 255), 3, cv2.LINE_AA)
 
         # Agregar la cantidad de cada color debajo del texto principal
         y_offset = 60
         for color, cantidad in contador_por_color.items():
-            cv2.putText(imagen_resultante, f'{color}: {cantidad}', (10, y_offset), font, 0.5, (0, 0, 0), 2, cv2.LINE_AA)
+            cv2.putText(imagen_resultante, f'{color}: {cantidad}', (10, y_offset), font, 1.2, (0, 0, 255), 3, cv2.LINE_AA)
             y_offset += 30
 
     cv2.waitKey(0)

@@ -96,6 +96,35 @@
             margin-top: 10px;
             font-style: italic;
         }
+        #teach-form-container {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 15px;
+            margin-top: 10px;
+        }
+    
+        #teach-form-container input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        #teach-form-container button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    
+        #teach-form-container button:hover {
+            background-color: #45a049;
+        }
         .button-resizer {
             padding: 12px;
             min-width: -webkit-fit-content;
@@ -182,82 +211,190 @@
     </div>
     <div class="container">
         <h1>Hola! Soy Kiti</h1>
-
+  
         <div class="row">
-            <div class="col-md-8">
-                <div id="chat-container">
-                    <div id="chat-display"></div>
-                    <div id="user-input">
-                        <input type="text" id="user-message" placeholder="Escribe tu mensaje...">
-                        <button onclick="sendMessage()">Enviar</button>
-                    </div>
-                </div>
+          <div class="col-md-8">
+            <!-- Chatbot Container -->
+            <div id="chat-container">
+              <div id="chat-display"></div>
+              <div id="user-input">
+                <input
+                  type="text"
+                  id="user-message"
+                  placeholder="Escribe tu mensaje..."
+                />
+                <button onclick="sendMessage()">Enviar</button>
+              </div>
+              <!-- Nuevo contenedor para el formulario de enseñar respuesta -->
+              <div id="teach-form-container"></div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <!-- Pasos de Uso -->
+            <div id="usage-steps">
+              <h2>Pasos para usar el Chatbot</h2>
+              <ol>
+                <li>Introduce tu mensaje en el cuadro de chat.</li>
+                <li>
+                  Haz clic en el botón "Enviar" o presiona Enter para enviar el
+                  mensaje.
+                </li>
+                <li>Espera la respuesta del chatbot.</li>
+                <li>
+                  En todo caso el ChatBot no entiende lo que estas preguntando
+                  puedes ensarle lo que va a decir.
+                </li>
+              </ol>
+              <p>Ejemplo: "Hola, como estas?"</p>
+              <p>Ejemplo: "Me sieto triste"</p>
+              <p>Ejemplo: "Que puedo hacer"</p>
+              <p>Ejemplo: "Estoy enojado"</p>
             </div>
 
-            <div class="col-md-4">
-                <div id="usage-steps">
-                    <h2>Pasos para usar el Chatbot</h2>
-                    <ol>
-                        <li>Introduce tu mensaje en el cuadro de chat.</li>
-                        <li>Haz clic en el botón "Enviar" o presiona Enter para enviar el mensaje.</li>
-                        <li>Espera la respuesta del chatbot.</li>
-                    </ol>
-                    <p>Ejemplo: "Hola, como estas?"</p>
-                    <p>Ejemplo: "Me siento triste"</p>
-                    <p>Ejemplo: "Que puedo hacer"</p>
-                    <p>Ejemplo: "Estoy enojado"</p>
-                </div>
 
-
-                <div id="usage-instructions">
-                    <h2>Indicaciones para usar el Sistema</h2>
-                    <p>Asegúrate de formular preguntas claras y concisas para obtener mejores respuestas del chatbot.</p>
-                </div>
-            </div>
+        <!-- Indicaciones de Uso -->
+        <div id="usage-instructions">
+            <h2>Indicaciones para usar el Sistema</h2>
+            <p>
+            Asegúrate de formular preguntas claras y concisas para obtener
+            mejores respuestas del chatbot.
+            </p>
+            <p>
+            Ten en cuenta que se ha implementado una nueva funcion para que
+            puedas entrenar al ChatBot en caso no sepa exactamente lo que
+            estas preguntando.
+            </p>
         </div>
-    </div>
+        </div>
+        </div>
+        </div>
     
     <canvas class="canvas"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-        function sendMessage() {
-            var userMessage = document.getElementById('user-message').value;
-            document.getElementById('user-message').value = '';
-        
-            var chatDisplay = document.getElementById('chat-display');
-            chatDisplay.innerHTML += '<div class="user-message">Usuario: ' + userMessage + '</div>';
-        
-            fetch('/get_response', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'user_message=' + encodeURIComponent(userMessage),
-            })
-            .then(response => response.json())
-            .then(data => {
-                var botResponse = data.bot_response;
-                chatDisplay.innerHTML += '<div class="bot-message">Chatbot: ' + botResponse + '</div>';
-        
-                if (data.learning_prompt) {
-                    var userLearningResponse = prompt("Lo siento, no sé la respuesta. ¿Cuál debería ser la respuesta?");
-                    
-                    if (userLearningResponse) {
-                        fetch('/store_learning_response', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: 'user_message=' + encodeURIComponent(userMessage) + '&user_learning_response=' + encodeURIComponent(userLearningResponse),
-                        });
-                    }
-                }
-
-                if (!data.bot_response && !data.learning_prompt) {
-                    alert('No hay preguntas relacionadas en el JSON.');
-                }
-            });
+    function sendMessage() {
+        var userMessage = document.getElementById("user-message").value;
+        document.getElementById("user-message").value = "";
+        if (!userMessage.trim()) {
+          showErrorAlert("Por favor, ingresa un mensaje antes de enviar.");
+          return;
         }
-        const canvas = document.querySelector('.canvas');
+
+        var chatDisplay = document.getElementById("chat-display");
+        chatDisplay.innerHTML +=
+          '<div class="user-message"><strong>Tú:</strong> ' +
+          userMessage +
+          "</div>";
+
+        fetch("/get_response", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: "user_message=" + encodeURIComponent(userMessage),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            var botResponse = data.bot_response;
+            chatDisplay.innerHTML +=
+              '<div class="bot-message"><strong>Chatbot:</strong> ' +
+              botResponse +
+              "</div>";
+
+            // Si la respuesta indica "Enseñame", mostrar un formulario para enseñar al chatbot
+            if (botResponse.startsWith("Enseñame:")) {
+              var teachFormContainer = document.getElementById(
+                "teach-form-container"
+              );
+              teachFormContainer.innerHTML =
+                "<p>Chatbot: No sé la respuesta. Por favor, enséñame qué responder a esta pregunta:</p>" +
+                '<input type="text" id="respuesta_aprendida" placeholder="Escribe la respuesta...">' +
+                "<button onclick=\"teachBot('" +
+                userMessage +
+                "')\">Enviar Respuesta</button>";
+
+              // Mostrar el contenedor del formulario
+              teachFormContainer.style.display = "flex";
+            } else {
+              // Ocultar el contenedor del formulario si no es una solicitud de enseñar
+              document.getElementById("teach-form-container").style.display =
+                "none";
+            }
+          });
+      }
+
+      function teachBot(userMessage) {
+        var respuestaAprendida = document.getElementById(
+          "respuesta_aprendida"
+        ).value;
+        if (!respuestaAprendida.trim()) {
+          showErrorAlert("Por favor, ingresa una respuesta antes de enviar.");
+          return;
+        }
+
+        fetch("/teach_bot", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body:
+            "user_message=" +
+            encodeURIComponent(userMessage) +
+            "&respuesta_aprendida=" +
+            encodeURIComponent(respuestaAprendida),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              // Mostrar alerta de éxito en lugar del mensaje
+              showSuccessAlert(
+                "¡Gracias! La respuesta ha sido aprendida. Vuelve a preguntar por favor."
+              );
+
+              // Ocultar el formulario después de unos segundos
+              setTimeout(function () {
+                document.getElementById("teach-form-container").style.display =
+                  "none";
+              }, 2000);
+
+              // Mostrar el contenedor del formulario principal para seguir preguntando
+              document.getElementById("user-input").style.display = "flex";
+            } else {
+              // Mostrar alerta de error si no se pudo aprender la respuesta
+              showErrorAlert(
+                "Hubo un error al aprender la respuesta. Por favor, inténtalo de nuevo."
+              );
+            }
+          });
+      }
+
+      function showErrorAlert(message) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: message,
+        });
+      }
+
+      function showSuccessAlert(message) {
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: message,
+        });
+      }
+
+      document
+        .getElementById("user-message")
+        .addEventListener("keydown", function (e) {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        });
+
+
+const canvas = document.querySelector('.canvas');
 const ctx = canvas.getContext('2d');
 
 const pixelRatio = window.devicePixelRatio || 1;

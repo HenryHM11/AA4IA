@@ -1,18 +1,19 @@
 {
-    "Cuestions": {
-        "hola": "Holi En que puedo ayudarte",
-        "bye": "Bye te espero pronto!",
-        "¿como estás?": "Estoy bien, gracias por preguntar.",
-        "default": "No entiendo lo que estás diciendo. ¿Puedes reformular tu pregunta?",
-        "quien te creo": "Mi creadora es Keisy Vallejos Carrera. ¿Interesante no crees?",
-        "si": "excelente"
-    },
-    "Cuestions_ban": {
-        "serrano": "de racismo",
+  "Cuestions": {
+    "Hola, como estas?": "Estoy bien, gracias por preguntar.",
+    "hola": "Holi En que puedo ayudarte",
+    "bye": "Bye te espero pronto!",
+    "\u00c2\u00bfc\u00c3\u00b3mo est\u00c3\u00a1s?": "Estoy bien, gracias por preguntar.",
+    "default": "No entiendo lo que est\u00c3\u00a1s diciendo. \u00c2\u00bfPuedes reformular tu pregunta?",
+    "quien te creo": "Mi creadora es Maria Vallejos Carrera. \u00c2\u00bfInteresante no crees?",
+    "si": "excelente"
+  },
+  "Cuestions_ban": {
+    "serrano": "de racismo",
     "tonto": "de insulto",
-    "imbécil": "de insulto",
-    "estúpido": "de insulto",
-    "sin papá": "de insulto",
+    "imb\u00c3\u00a9cil": "de insulto",
+    "est\u00c3\u00bapido": "de insulto",
+    "sin pap\u00c3\u00a1": "de insulto",
     "malparido": "de insulto",
     "idiota": "de insulto",
     "cabron": "de insulto",
@@ -32,22 +33,30 @@
     "joder": "de insulto",
     "silencio negro": "de racismo",
     "negro": "de racismo",
-    "cholo tonto": "de discriminación",
-    "cholo": "de discriminación",
+    "cholo tonto": "de discriminaci\u00c3\u00b3n",
+    "cholo": "de discriminaci\u00c3\u00b3n",
     "basura": "de contenido ofensivo",
     "tarado": "de comportamiento irrespetuoso",
     "largate": "de ofensa",
     "pobre": "de lenguaje humillante"
-    },
-    "Neuro": {
-        "Me sieto triste": "Ohh en que puedo ayudarte, dejame que soy un chaat bot especializado en ayudar a los humanos con sus emociones",
-        "Mal":"Sabes, sentirse mal es normal eres humano y las emociones no son malas ",
-        "Que puedo hacer": "Experimentar tristeza es algo normal, Así que si te apetece llorar, hazlo, es sanador y te vas a sentir más aliviado ¿Sientes Ansiedad?",
-        "ok":"Te brindare tecnicas para la ansiedad : Respiración: tomar aire y llevarlo a nuestro diafragma, al vientre, sin hinchar el pecho",
-        "Estoy enojado":"oh calma, dahite va un chiste : ¿como se dice papel en japones ?",
-        "nose":"Sacamoko jaja , espero haberte ayudado"
-    },
-    "Learning": {
-        "mama":"mamamamamama"
-    }  
+  },
+  "Neuro": {
+    "Me sieto triste": "Ohh en que puedo ayudarte, dejame que soy un chat bot especializado en ayudar a los humanos con sus emociones",
+    "Mal": "Sabes, sentirse mal es normal eres humano y las emociones no son malas ",
+    "Que puedo hacer": "Experimentar tristeza es algo normal, As\u00c3\u00ad que si te apetece llorar, hazlo, es sanador y te vas a sentir m\u00c3\u00a1s aliviado \u00c2\u00bfSientes Ansiedad?",
+    "ok": "Te brindare tecnicas para la ansiedad : Respiraci\u00c3\u00b3n: tomar aire y llevarlo a nuestro diafragma, al vientre, sin hinchar el pecho",
+    "Estoy enojado": "oh calma, dahite va un chiste : \u00c2\u00bfcomo se dice papel en japones ?",
+    "nose": "Sacamoko jaja , espero haberte ayudado"
+  },
+  "Learning": {
+    "como te llamas?": "Hola, me llamo Kiti soy un chatbot creado por el Grupo 5",
+    "": "Miraflores, Lima",
+    "lugar bonito para salir?": "Lima,peru",
+    "dime un lugar tur\u00edstico de per\u00fa?": "Museo de Tumbas Reales Se\u00f1or de Sip\u00e1n",
+    "dime tu color favorito": "Verde",
+    "recomi\u00e9ndame una serie en netflix": "Stranger Things",
+    "cual es el juego mas esperado en el 2025?": "Grand Theft Auto VI",
+    "que pais gano el mundial en el 2022?": "Argentina ",
+    "recomi\u00e9ndame un libro para mejorar mi estilo de vida": "El club de la 5 de la ma\u00f1ana"
+  }
 }
